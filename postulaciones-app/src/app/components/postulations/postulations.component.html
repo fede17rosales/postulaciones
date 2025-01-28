@@ -1,0 +1,305 @@
+<main role="main">
+  <section class="jumbotron text-center">
+    <div class="container">
+      <h1>My Postulations</h1>
+      <p class="lead text-muted">
+        I got tired of having to write everything down in a notebook,
+        so I decided to develop my own application app. Where I can upload applications and my opinions about them.
+      </p>
+      <figure class="text-end">
+        <figcaption class="blockquote-footer">
+          <cite title="Source Title">Developed by Federico Rosales</cite>
+        </figcaption>
+      </figure>
+      <div class="row">
+        <div class="col">
+          <button type="button" class="btn btn-outline-primary btn-xs" (click)="togglePostulation()">My Postulations</button>
+        </div>
+        <div class="col">
+          <button type="button" class="btn btn-outline-success btn-xs" (click)="toggleForm()">Create Postulation</button>
+        </div>
+        <div class="col">
+          <button type="button" class="btn btn-outline-warning btn-xs" (click)="toggleOpinion()">My Opinions</button>
+        </div>
+      </div>
+    </div>
+  </section>
+  <br>
+  <!-- Listado de postulaciones -->
+  <div class="container-fluid" *ngIf="showPostulation">
+    <div class="card-group">
+      <div class="col-md-6 content-card" *ngFor="let postulation of postulations; let i = index">
+        <div class="container-fluid">
+        <div class="card shadow-sm">
+          <div class="card-body">
+            <h1 class="card-title">{{ postulation.titulo }} - {{ postulation.empresa }}</h1>
+            <div class="accordion">
+              <div class="accordion-item">
+                <h2 class="accordion-header">
+                  <button
+                    class="accordion-button collapsed btn-info"
+                    type="button"
+                    data-bs-toggle="collapse"
+                    [attr.data-bs-target]="'#collapse' + i"
+                    aria-expanded="false"
+                    [attr.aria-controls]="'collapse' + i">
+                    Description
+                  </button>
+                </h2>
+                <div
+                  [id]="'collapse' + i"
+                  class="accordion-collapse collapse"
+                  [attr.aria-labelledby]="'heading' + i">
+                  <div class="accordion-body">
+                    <figure class="text-end">
+                      <blockquote class="blockquote">
+                        <p><small>{{ postulation.fecha_de_alta }}</small></p>
+                      </blockquote>
+                    </figure>
+                    <p class="card-text">{{ postulation.descripcion }} </p>
+                    <br>
+                    <ul>
+                      <li *ngFor="let responsabilidad of postulation.responsabilidades">
+                        <p class="card-text">{{ responsabilidad }} </p>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <br>
+            <div class="row">
+              <div class="col">
+                <div class="alert alert-primary" role="alert">
+                  Recruiter: {{ postulation.reclutador }}
+                </div>
+              </div>
+              <div class="col">
+                <div class="alert alert-success" role="alert">
+                  Salary: {{ postulation.salario }}
+                </div>
+              </div>
+            </div>
+            <div class="row justify-content-center">
+              <div class="col-auto">
+                <button
+                  type="button"
+                  class="btn btn-outline-warning"
+                  (click)="toggleCommentForm(postulation.id)">
+                  Comment
+                </button>
+              </div>
+              <div class="col-auto">
+                <button
+                  type="button"
+                  class="btn btn-outline-danger"
+                  (click)="deletePostulation(postulation.id)">
+                  Delete
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+  <!-- Listado de comentarios -->
+  <div class="container-fluid" *ngIf="showComment">
+    <div class="card-group">
+      <div class="col-md-4 col-md-2 content-card" *ngFor="let comment of comments">
+        <div class="container-fluid">
+        <div class="card-big-shadow" >
+          <div class="card" data-background="color" data-color="yellow" data-radius="none">
+            <div class="content">
+              <h4 class="title">{{ comment.empresa }}</h4>
+              <h6 class="category"> Opinion's Glassdoor</h6>
+              <ul class="list-group list-group-flush" *ngFor="let opinion of comment.opiniones_glassdoor">
+                <p class="description">"{{ opinion }}"</p>
+              </ul>
+              <h6 class="category"> My Personal Opionion</h6>
+              <p class="description">{{ comment.opinion_personal }}</p>
+              <h6 class="category"> Value: {{ comment.valoracion }} </h6>
+            </div>
+          </div>
+        </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Formulario de creación  -->
+  <div class="container mt-4 " *ngIf="showForm">
+    <form  [formGroup]="postulationForm" (ngSubmit)="createPostulation()" >
+      <div class="row">
+        <div class="col">
+          <input type="text"
+                 id="titulo"
+                 class="form-control"
+                 placeholder="Título del puesto">
+        </div>
+        <div class="col">
+          <input type="text"
+                 id="empresa"
+                 class="form-control"
+                 placeholder="Nombre de la empresa">
+        </div>
+      </div>
+      <br>
+      <div class="form-group">
+         <textarea
+           id="descripcion"
+           class="form-control"
+           rows="3"
+           placeholder="Descripción del puesto ..."
+         ></textarea>
+      </div>
+      <br>
+      <div class="form-group">
+         <textarea
+           id="responsabilidades"
+           class="form-control"
+           rows="3"
+           placeholder="Lista de responsabilidades separadas por coma"
+         ></textarea>
+      </div>
+      <br>
+      <div class="row">
+        <div class="col">
+          <label for="salario">Salario</label>
+          <input
+            type="number"
+            id="salario"
+            class="form-control"
+            placeholder="Ej: 3000USD o 1500000ARS"
+          />
+        </div>
+        <div class="col">
+          <label for="tiene_ingles">¿Requiere inglés?</label>
+          <select id="tiene_ingles" class="form-control">
+            <option value="true" selected>Sí</option>
+            <option value="false">No</option>
+          </select>
+        </div>
+        <div class="col">
+          <label for="fecha_publicacion">Fecha de publicación</label>
+          <input
+            type="date"
+            id="fecha_publicacion"
+            class="form-control"
+          />
+        </div>
+      </div>
+      <br>
+      <div class="form-group">
+         <textarea
+           id="beneficios"
+           class="form-control"
+           rows="2"
+           placeholder="Beneficios ofrecidos"
+         ></textarea>
+      </div>
+      <br>
+      <div class="form-group">
+        <input
+          type="text"
+          id="reclutador"
+          class="form-control"
+          placeholder="Nombre del reclutador"
+        />
+      </div>
+      <br>
+      <div class="row">
+        <div class="col">
+          <br>
+          <input
+            type="number"
+            id="antiguedad"
+            class="form-control"
+            placeholder="Antiguedad en años"
+          />
+        </div>
+        <div class="col">
+          <label for="tipo">Tamaño de la empresa</label>
+          <select id="tipo" class="form-control">
+            <option value="small" selected>Pequeña</option>
+            <option value="medium">Mediana</option>
+            <option value="large">Grande</option>
+          </select>
+        </div>
+        <div class="col">
+          <br>
+          <input
+            type="number"
+            id="cantidad_empleados"
+            class="form-control"
+            placeholder="Cantidad de empleados"
+          />
+        </div>
+      </div>
+      <br>
+      <div class="form-group">
+         <textarea
+           id="opiniones"
+           class="form-control"
+           rows="2"
+           placeholder="Opiniones de la empresa ..."
+         ></textarea>
+      </div>
+      <br>
+      <div class="row">
+        <div class="col">
+          <input
+            type="number"
+            id="validacion"
+            class="form-control"
+            placeholder="Validacion de la empresa(1 al 5)"
+          />
+        </div>
+        <div class="col">
+          <input
+            type="number"
+            id="sueldo_opinion"
+            class="form-control"
+            placeholder="Poner el sueldo que pagan realmente"
+          />
+        </div>
+      </div>
+      <br>
+      <div class="d-flex flex-wrap gap-2">
+        <button type="submit" class="btn btn-outline-success">Save</button>
+        <button type="button" class="btn btn-outline-danger" (click)="toggleCancel()">Cancel</button>
+      </div>
+    </form>
+  </div>
+  <!-- Formulario de Comentario-->
+  <div class="container mt-4 " *ngIf="showCommentForm">
+    <form  [formGroup]="commentForm" (ngSubmit)="createComment()" >
+      <div class="form-group">
+         <textarea
+           id="comentario"
+           class="form-control"
+           rows="3"
+           placeholder="Add commnents here..."
+           formControlName="comentario"
+         ></textarea>
+      </div>
+      <br>
+      <div class="d-flex flex-wrap gap-2">
+        <button
+          type="button"
+          class="btn btn-outline-success"
+          (click)="createComment()">
+          Save
+        </button>
+        <button
+          type="button"
+          class="btn btn-outline-danger"
+          (click)="toggleCancel()">
+          Cancel
+        </button>
+      </div>
+    </form>
+  </div>
+</main>
