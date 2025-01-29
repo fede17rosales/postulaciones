@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 export interface Comment {
+  compañia : string;
   comentario: string;
 }
 
@@ -64,14 +65,12 @@ export class PostulationService {
     return this.http.delete<void>(`${this.postulationUrl}/${id}`);
   }
 
-// Obtener la lista de comentarios
   listComments(): Observable<CommentResponse[]> {
     return this.http.get<CommentResponse[]>(`${this.commentUrl}`);
   }
 
-// Guardar un comentario
-  saveComment(id: number, comment: Comment): Observable<void> {
-      const url = `${this.commentUrl}/${id}`;
+  saveComment(comment: Comment): Observable<void> {
+      const url = `${this.commentUrl}`;
       return this.http.post<void>(url, comment);
   }
 }

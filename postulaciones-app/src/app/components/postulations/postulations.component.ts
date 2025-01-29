@@ -22,7 +22,7 @@ export class PostulationsComponent implements OnInit {
   showForm: boolean = false;
   postulationForm: FormGroup;
   commentForm: FormGroup;
-  currentPostulationId: number = 0;
+  company: string = '';
 
 constructor(
   private postulationService: PostulationService,
@@ -54,8 +54,8 @@ toggleForm(): void {
   this.showComment = false;
 }
 
-toggleCommentForm(postulationId: number): void {
-  this.currentPostulationId = postulationId;
+toggleCommentForm(company: string): void {
+  this.company = company;
   this.showCommentForm = true;
   this.showPostulation = false;
   this.showComment = false;
@@ -136,15 +136,14 @@ createPostulation(): void {
   }
 
   createComment(): void {
-  console.log(this.commentForm.value);
   if (this.commentForm.valid) {
       const formValues = this.commentForm.value;
 
           const newComment: Comment = {
+            compañia: this.company,
             comentario: formValues.comentario,
         }
-      console.log('Creando comentario:', newComment);
-      this.postulationService.saveComment(this.currentPostulationId, newComment).subscribe({
+      this.postulationService.saveComment(newComment).subscribe({
         next: () => {
           alert('Comentario creado exitosamente.');
           this.commentForm.reset();
@@ -157,8 +156,8 @@ createPostulation(): void {
 
       });
   }
-  console.log('Creando comentario para postulación con id:', this.currentPostulationId);
-
+    this.showCommentForm = false;
+    this.showComment = true;
   }
 
   deletePostulation(id: number): void {

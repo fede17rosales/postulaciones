@@ -20,30 +20,30 @@ import java.util.stream.Collectors;
 public class CommentServiceImpl implements CommentService {
 
     @Autowired
-    private OpinionRepository repository;
+    private OpinionRepository opinionRepository;
 
+    @Autowired
     private CompanyRepository companyRepository;
     @Override
-    public void saveComment(Long id, Comment comment) {
-        List<OpinionEntity> opinions = repository.findByCompanyId(id);
+    public void saveComment(Comment comment) {
+    CompanyEntity company = companyRepository.findByName(comment.getCompany());
+    List<OpinionEntity> opinions = opinionRepository.findByCompanyId((long) company.getId());
         if (!opinions.isEmpty()) {
             opinions.forEach(opinion -> {
                 opinion.setPersonalOpinion(comment.getComment());
-                repository.save(opinion);
+                opinionRepository.save(opinion);
             });
         }else {
-            Optional<CompanyEntity> company = companyRepository.findById(id);
             OpinionEntity opinion = new OpinionEntity();
             opinion.setPersonalOpinion(comment.getComment());
-            opinion.setCompany(company.get());
-            repository.save(opinion);
+            opinion.setCompany(company);
+            opinionRepository.save(opinion);
         }
-
     }
 
     @Override
     public List<CommentResponse> viewComments() {
-        List<OpinionEntity> opinions = (List<OpinionEntity>) repository.findAll();
+        List<OpinionEntity> opinions = opinionRepository.findAllByOrderByIdDesc();
 
         return opinions.stream()
                 .filter(opinion -> opinion.getPersonalOpinion() != null && opinion.getGlassdoor().getValue() > 0)

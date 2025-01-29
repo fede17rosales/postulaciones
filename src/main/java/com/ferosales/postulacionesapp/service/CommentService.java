@@ -7,7 +7,7 @@ import com.ferosales.postulacionesapp.entity.OpinionEntity;
 import java.util.List;
 
 public interface CommentService {
-    void saveComment(Long id, Comment comment);
+    void saveComment(Comment comment);
     List<CommentResponse> viewComments();
 
 }

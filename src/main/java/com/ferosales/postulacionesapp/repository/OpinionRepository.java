@@ -9,4 +9,6 @@ import java.util.List;
 public interface OpinionRepository extends CrudRepository<OpinionEntity,Long> {
 
     List<OpinionEntity> findByCompanyId(Long id);
+
+    List<OpinionEntity> findAllByOrderByIdDesc();
 }

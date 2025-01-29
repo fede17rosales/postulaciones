@@ -22,9 +22,9 @@ public class CommentController {
         return ResponseEntity.ok(commentService.viewComments());
     }
 
-    @PostMapping("/comment/{id}")
-    public ResponseEntity<?> saveComment(@PathVariable("id") Long id, @RequestBody Comment comment) {
-        commentService.saveComment(id,comment);
+    @PostMapping("/comment")
+    public ResponseEntity<?> saveComment(@RequestBody Comment comment) {
+        commentService.saveComment(comment);
         return ResponseEntity.ok().build();
     }
 

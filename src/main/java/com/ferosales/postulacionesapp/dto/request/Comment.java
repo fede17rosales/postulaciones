@@ -9,6 +9,8 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Comment {
+    @JsonProperty("compañia")
+    private String company;
     @JsonProperty("comentario")
     private String comment;
 }

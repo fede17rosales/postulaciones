@@ -85,7 +85,7 @@
                 <button
                   type="button"
                   class="btn btn-outline-warning"
-                  (click)="toggleCommentForm(postulation.id)">
+                  (click)="toggleCommentForm(postulation.empresa)">
                   Comment
                 </button>
               </div>
@@ -114,14 +114,13 @@
         <div class="card-big-shadow" >
           <div class="card" data-background="color" data-color="yellow" data-radius="none">
             <div class="content">
-              <h4 class="title">{{ comment.empresa }}</h4>
+              <h4 class="title">{{ comment.empresa }} - {{ comment.valoracion }} </h4>
+              <h6 class="category"> My Personal Opinion</h6>
+              <p class="description">{{ comment.opinion_personal }}</p>
               <h6 class="category"> Opinion's Glassdoor</h6>
               <ul class="list-group list-group-flush" *ngFor="let opinion of comment.opiniones_glassdoor">
                 <p class="description">"{{ opinion }}"</p>
               </ul>
-              <h6 class="category"> My Personal Opionion</h6>
-              <p class="description">{{ comment.opinion_personal }}</p>
-              <h6 class="category"> Value: {{ comment.valoracion }} </h6>
             </div>
           </div>
         </div>

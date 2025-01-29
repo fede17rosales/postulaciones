@@ -6,7 +6,5 @@ import org.springframework.data.repository.CrudRepository;
 import java.util.List;
 
 public interface TaskRepository extends CrudRepository<TaskEntity, Long> {
-    void deleteByOfferId(Long id);
-
     List<TaskEntity> findByOfferId(Long id);
 }
