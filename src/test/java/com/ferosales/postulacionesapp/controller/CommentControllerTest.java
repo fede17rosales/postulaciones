@@ -15,12 +15,12 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import java.util.Collections;
 
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.*;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @SpringBootTest
 class CommentControllerTest {
@@ -55,13 +55,13 @@ class CommentControllerTest {
         Comment comment = new Comment();
         comment.setComment("Test Comment");
 
-        doNothing().when(commentService).saveComment(eq(1L), any(Comment.class));
+        doNothing().when(commentService).saveComment(any(Comment.class));
 
-        mockMvc.perform(post("/comment/{id}", 1L)
+        mockMvc.perform(post("/comment", 1L)
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content("{ \"comment\": \"Test Comment\", \"user\": \"Test User\" }"))
+                        .content("{ \"company\": \"Company\",\"comment\": \"Test Comment\" }"))
                 .andExpect(status().isOk());
 
-        verify(commentService, times(1)).saveComment(eq(1L), any(Comment.class));
+        verify(commentService, times(1)).saveComment( any(Comment.class));
     }
 }

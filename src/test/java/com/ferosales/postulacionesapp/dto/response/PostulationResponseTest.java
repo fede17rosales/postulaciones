@@ -19,7 +19,7 @@ class PostulationResponseTest {
         response.setTitle("Software Engineer");
         response.setDescription("Develop and maintain software solutions.");
         response.setResponsibilities(responsibilities);
-        response.setSalary(75000.0);
+        response.setSalary("75000.0");
         response.setRecruiter("John Doe");
         response.setDate("2024-12-01");
 
@@ -28,7 +28,7 @@ class PostulationResponseTest {
         assertThat(response.getTitle()).isEqualTo("Software Engineer");
         assertThat(response.getDescription()).isEqualTo("Develop and maintain software solutions.");
         assertThat(response.getResponsibilities()).isEqualTo(responsibilities);
-        assertThat(response.getSalary()).isEqualTo(75000.0);
+        assertThat(response.getSalary()).isEqualTo("75000.0");
         assertThat(response.getRecruiter()).isEqualTo("John Doe");
         assertThat(response.getDate()).isEqualTo("2024-12-01");
     }
@@ -40,11 +40,12 @@ class PostulationResponseTest {
 
         // Act
         PostulationResponse response = new PostulationResponse(
+                1L,
                 "TechCorp",
                 "Software Engineer",
                 "Develop and maintain software solutions.",
                 responsibilities,
-                75000.0,
+                "75000.0",
                 "John Doe",
                 "2024-12-01"
         );
@@ -54,7 +55,7 @@ class PostulationResponseTest {
         assertThat(response.getTitle()).isEqualTo("Software Engineer");
         assertThat(response.getDescription()).isEqualTo("Develop and maintain software solutions.");
         assertThat(response.getResponsibilities()).isEqualTo(responsibilities);
-        assertThat(response.getSalary()).isEqualTo(75000.0);
+        assertThat(response.getSalary()).isEqualTo("75000.0");
         assertThat(response.getRecruiter()).isEqualTo("John Doe");
         assertThat(response.getDate()).isEqualTo("2024-12-01");
     }
@@ -69,7 +70,7 @@ class PostulationResponseTest {
         assertThat(response.getTitle()).isNull();
         assertThat(response.getDescription()).isNull();
         assertThat(response.getResponsibilities()).isNull();
-        assertThat(response.getSalary()).isEqualTo(0.0);
+        assertThat(response.getSalary()).isNull();
         assertThat(response.getRecruiter()).isNull();
         assertThat(response.getDate()).isNull();
     }
@@ -79,11 +80,12 @@ class PostulationResponseTest {
         // Arrange
         List<String> responsibilities = Arrays.asList("Develop features", "Fix bugs", "Write tests");
         PostulationResponse response = new PostulationResponse(
+                1L,
                 "TechCorp",
                 "Software Engineer",
                 "Develop and maintain software solutions.",
                 responsibilities,
-                75000.0,
+                "75000.0",
                 "John Doe",
                 "2024-12-01"
         );
@@ -100,20 +102,22 @@ class PostulationResponseTest {
         // Arrange
         List<String> responsibilities = Arrays.asList("Develop features", "Fix bugs", "Write tests");
         PostulationResponse response1 = new PostulationResponse(
+                1L,
                 "TechCorp",
                 "Software Engineer",
                 "Develop and maintain software solutions.",
                 responsibilities,
-                75000.0,
+                "75000.0",
                 "John Doe",
                 "2024-12-01"
         );
         PostulationResponse response2 = new PostulationResponse(
+                1L,
                 "TechCorp",
                 "Software Engineer",
                 "Develop and maintain software solutions.",
                 responsibilities,
-                75000.0,
+                "75000.0",
                 "John Doe",
                 "2024-12-01"
         );

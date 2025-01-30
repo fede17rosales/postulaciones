@@ -3,8 +3,6 @@ package com.ferosales.postulacionesapp.entity;
 import jakarta.persistence.*;
 import lombok.Data;
 
-import java.util.List;
-
 
 @Data
 @Entity

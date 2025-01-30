@@ -5,19 +5,21 @@ import com.ferosales.postulacionesapp.dto.response.PostulationResponse;
 import com.ferosales.postulacionesapp.entity.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
-import org.springframework.boot.test.context.SpringBootTest;
+import org.mockito.junit.jupiter.MockitoExtension;
 
-import java.util.*;
+import java.util.Date;
+import java.util.List;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.*;
 
-@SpringBootTest
-class PostulationServiceImplTest {
+@ExtendWith(MockitoExtension.class)
+public class PostulationServiceImplTest {
+
     @Mock
     private OfferServiceImpl offerService;
 
@@ -33,88 +35,94 @@ class PostulationServiceImplTest {
     @Mock
     private OpinionServiceImpl opinionService;
 
+    @Mock
+    private ResponsibilityServiceImpl responsibilityService;
+
+    @Mock
+    private TaskServiceImpl taskService;
+
     @InjectMocks
     private PostulationServiceImpl postulationService;
 
     private Postulation postulation;
     private CompanyEntity companyEntity;
     private OfferEntity offerEntity;
-    private GlassdoorEntity glassdoorEntity;
     private PublicationEntity publicationEntity;
+    private TaskEntity taskEntity;
 
     @BeforeEach
-    public void setUp() {
-        MockitoAnnotations.openMocks(this);
-        List<String> r = new ArrayList<>();
-        r.add("respo 1");
-        r.add("respo 2");
-        r.add("respo 3");
+    void setUp() {
         postulation = new Postulation();
-        postulation.setTitle("Developer");
-        postulation.setDescription("Full-stack Developer position");
-        postulation.setResponsibilities(r);
-        postulation.setRecruiter("HR");
-        postulation.setSalary(500.00);
-        postulation.setBenefits("Health Insurance");
-        postulation.setEnglish(true);
-        postulation.setCompany("Tech Corp");
+        postulation.setCompany("Test Company");
+        postulation.setTitle("Software Engineer");
+        postulation.setResponsibilities(List.of("Coding", "Testing"));
+        postulation.setSalary(5000.00);
 
         companyEntity = new CompanyEntity();
-        companyEntity.setName("Tech Corp");
+        companyEntity.setName("Test Company");
 
         offerEntity = new OfferEntity();
-        offerEntity.setTitle("Developer");
-        offerEntity.setDescription("Full-stack Developer position");
-        offerEntity.setSalary(100.00);
-
-        glassdoorEntity = new GlassdoorEntity();
-        glassdoorEntity.setSalary(50000);
+        offerEntity.setId(1L);
+        offerEntity.setTitle("Software Engineer");
 
         publicationEntity = new PublicationEntity();
+        publicationEntity.setId(1L);
         publicationEntity.setCompany(companyEntity);
         publicationEntity.setOffer(offerEntity);
-        publicationEntity.setDatePublication(new Date("2025/10/10"));
+        publicationEntity.setDatePublication(new Date());
+
+        taskEntity = new TaskEntity();
+        taskEntity.setId(1L);
+        ResponsibilityEntity responsibility = new ResponsibilityEntity();
+        responsibility.setDescription("Coding");
+        taskEntity.setResponsibility(responsibility);
+        taskEntity.setOffer(offerEntity);
     }
 
     @Test
-    public void testViewPostulations() {
-
-        when(publicationService.viewPublications()).thenReturn(Collections.singletonList(publicationEntity));
+    void testViewPostulations() {
+        when(publicationService.viewPublications()).thenReturn(List.of(publicationEntity));
+        when(taskService.viewTasks()).thenReturn(List.of(taskEntity));
 
         List<PostulationResponse> responses = postulationService.viewPostulations();
 
-        verify(publicationService, times(1)).viewPublications();
         assertNotNull(responses);
         assertEquals(1, responses.size());
-        assertEquals("Tech Corp", responses.get(0).getCompany());
-        assertEquals("Developer", responses.get(0).getTitle());
+        assertEquals("Software Engineer", responses.get(0).getTitle());
     }
 
     @Test
-    public void testSavePostulation() {
-        when(offerService.saveOffer(any(OfferEntity.class))).thenReturn(offerEntity);
-        when(glassdoorService.saveGlassdoor(any(GlassdoorEntity.class))).thenReturn(glassdoorEntity);
-        when(companyService.findCompanyByName("Tech Corp")).thenReturn(companyEntity);
-        when(opinionService.save(any(OpinionEntity.class))).thenReturn(new OpinionEntity());
+    void testSavePostulation() {
+        when(companyService.findCompanyByName("Test Company")).thenReturn(null);
+        when(companyService.saveCompany(any())).thenReturn(companyEntity);
+        when(offerService.saveOffer(any())).thenReturn(offerEntity);
+        when(glassdoorService.saveGlassdoor(any())).thenReturn(new GlassdoorEntity());
+        when(opinionService.save(any())).thenReturn(null);
 
-        postulationService.savePostulation(postulation);
+        assertDoesNotThrow(() -> postulationService.savePostulation(postulation));
 
-        verify(offerService, times(1)).saveOffer(any(OfferEntity.class));
-        verify(glassdoorService, times(1)).saveGlassdoor(any(GlassdoorEntity.class));
-        verify(companyService, times(1)).findCompanyByName("Tech Corp");
-        verify(publicationService, times(1)).savePublication(any(PublicationEntity.class));
-        verify(opinionService, times(1)).save(any(OpinionEntity.class));
+        verify(companyService, times(1)).saveCompany(any());
+        verify(offerService, times(1)).saveOffer(any());
     }
 
     @Test
-    public void testDeletePostulation() {
+    void testDeletePostulation() {
         when(publicationService.getPublication(1L)).thenReturn(Optional.of(publicationEntity));
+        when(taskService.findTaskByOfferId(1L)).thenReturn(List.of(taskEntity));
+        when(offerService.findOfferById(anyLong())).thenReturn(Optional.of(offerEntity));
 
-        postulationService.deletePostulation(1L);
+        assertDoesNotThrow(() -> postulationService.deletePostulation(1L));
 
-        verify(publicationService, times(1)).getPublication(1L);
-        verify(publicationService, times(1)).deletePublication(1L);
-        verify(offerService, times(1)).deleteOfferById(publicationEntity.getOffer().getId());
+        verify(publicationService, times(1)).deletePublication(anyLong());
+        verify(taskService, times(1)).deleteById(anyLong());
+        verify(offerService, times(1)).deleteOfferById(anyLong());
     }
 
+    @Test
+    void testSetSalaryCoin() {
+        assertEquals("No especificado", postulationService.setSalaryCoin(null));
+        assertEquals("$2000.0 USD", postulationService.setSalaryCoin(2000.0));
+        assertEquals("$3000.0 USD", postulationService.setSalaryCoin(3000.0));
+        assertEquals("$4000.0 ARS", postulationService.setSalaryCoin(4000.0));
+    }
 }

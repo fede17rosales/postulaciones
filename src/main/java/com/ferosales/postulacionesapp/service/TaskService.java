@@ -3,7 +3,6 @@ package com.ferosales.postulacionesapp.service;
 import com.ferosales.postulacionesapp.entity.TaskEntity;
 
 import java.util.List;
-import java.util.Optional;
 
 public interface TaskService {
 

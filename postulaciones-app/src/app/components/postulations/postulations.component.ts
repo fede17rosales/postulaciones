@@ -32,15 +32,18 @@ constructor(
       titulo: ['', Validators.required],
       empresa: ['', Validators.required],
       descripcion: ['', Validators.required],
+
       responsabilidades: ['', Validators.required],
       salario: [0, [Validators.required, Validators.min(0)]],
-      beneficios: [''],
       tiene_ingles: [false],
+      fecha_publicacion: [''],
+      beneficios: [''],
       reclutador: ['', Validators.required],
       antiguedad: [0, Validators.min(0)],
       tipo: ['Indefinido'],
       cantidad_empleados: [0, Validators.min(1)],
       opiniones: [''],
+      validacion: [0],
       sueldo_opinion: [0, Validators.min(0)]
     });
   this.commentForm = this.fb.group({
@@ -99,6 +102,8 @@ loadComments(): void {
 }
 
 createPostulation(): void {
+    console.log("Estado del formulario:", this.postulationForm.valid);
+    console.log("Valores del formulario:", this.postulationForm.value);
     if (this.postulationForm.valid) {
       const formValues = this.postulationForm.value;
 
@@ -116,8 +121,8 @@ createPostulation(): void {
         tipo: formValues.tipo,
         cantidad_empleados: formValues.cantidad_empleados,
         opiniones: formValues.opiniones ? formValues.opiniones.split(',').map((opinion: string) => opinion.trim()) : [],
-        validacion: 0, // Valor predeterminado
-                sueldo_opinion: formValues.sueldo_opinion
+        validacion: 0,
+        sueldo_opinion: formValues.sueldo_opinion
         };
 
         this.postulationService.savePostulation(newPostulation).subscribe({

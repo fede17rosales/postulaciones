@@ -18,7 +18,6 @@ class OfferEntityTest {
         offer.setId(1L);
         offer.setTitle("Software Engineer");
         offer.setDescription("A great opportunity to work in tech");
-        offer.setResponsibilities(responsibilities);
         offer.setRecruiter("John Doe");
         offer.setSalary(120000.0);
         offer.setBenefits("Health insurance, 401k");
@@ -29,7 +28,6 @@ class OfferEntityTest {
         assertThat(offer.getId()).isEqualTo(1L);
         assertThat(offer.getTitle()).isEqualTo("Software Engineer");
         assertThat(offer.getDescription()).isEqualTo("A great opportunity to work in tech");
-        assertThat(offer.getResponsibilities()).isEqualTo(responsibilities);
         assertThat(offer.getRecruiter()).isEqualTo("John Doe");
         assertThat(offer.getSalary()).isEqualTo(120000.0);
         assertThat(offer.getBenefits()).isEqualTo("Health insurance, 401k");
@@ -44,7 +42,6 @@ class OfferEntityTest {
         offer1.setId(1L);
         offer1.setTitle("Software Engineer");
         offer1.setDescription("A great opportunity to work in tech");
-        offer1.setResponsibilities(Arrays.asList("Develop features", "Fix bugs", "Write documentation"));
         offer1.setRecruiter("John Doe");
         offer1.setSalary(120000.0);
         offer1.setBenefits("Health insurance, 401k");
@@ -55,7 +52,6 @@ class OfferEntityTest {
         offer2.setId(1L);
         offer2.setTitle("Software Engineer");
         offer2.setDescription("A great opportunity to work in tech");
-        offer2.setResponsibilities(Arrays.asList("Develop features", "Fix bugs", "Write documentation"));
         offer2.setRecruiter("John Doe");
         offer2.setSalary(120000.0);
         offer2.setBenefits("Health insurance, 401k");
@@ -74,7 +70,6 @@ class OfferEntityTest {
         offer.setId(1L);
         offer.setTitle("Software Engineer");
         offer.setDescription("A great opportunity to work in tech");
-        offer.setResponsibilities(Arrays.asList("Develop features", "Fix bugs", "Write documentation"));
         offer.setRecruiter("John Doe");
         offer.setSalary(120000.0);
         offer.setBenefits("Health insurance, 401k");
@@ -89,7 +84,6 @@ class OfferEntityTest {
                 "id=1",
                 "title=Software Engineer",
                 "description=A great opportunity to work in tech",
-                "responsibilities=[Develop features, Fix bugs, Write documentation]",
                 "recruiter=John Doe",
                 "salary=120000.0",
                 "benefits=Health insurance, 401k",

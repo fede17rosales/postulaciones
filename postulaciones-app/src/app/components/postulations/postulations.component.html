@@ -115,77 +115,81 @@
     <form [formGroup]="postulationForm" (ngSubmit)="createPostulation()">
       <div class="row">
         <div class="col">
-          <input type="text" id="titulo" class="form-control" placeholder="Título del puesto">
+          <input type="text" id="titulo"  formControlName ="titulo" class="form-control" placeholder="Título del puesto">
         </div>
         <div class="col">
-          <input type="text" id="empresa" class="form-control" placeholder="Nombre de la empresa">
+          <input type="text" id="empresa" formControlName="empresa" class="form-control" placeholder="Nombre de la empresa">
         </div>
       </div>
       <br>
       <div class="form-group">
-        <textarea id="descripcion" class="form-control" rows="3" placeholder="Descripción del puesto ..."></textarea>
+        <textarea id="descripcion" formControlName="descripcion" class="form-control" rows="3" placeholder="Descripción del puesto ..."></textarea>
       </div>
       <br>
       <br>
       <div class="form-group">
-        <textarea id="responsabilidades" class="form-control" rows="3" placeholder="Lista de responsabilidades separadas por coma"></textarea>
+        <textarea id="responsabilidades"  formControlName="responsabilidades" class="form-control" rows="3" placeholder="Lista de responsabilidades separadas por coma"></textarea>
       </div>
       <br>
       <div class="row">
         <div class="col">
           <label for="salario">Salario</label>
-          <input type="number" id="salario" class="form-control" placeholder="Ej: 3000USD o 1500000ARS"/>
+          <input type="number" id="salario" formControlName="salario" class="form-control" placeholder="Ej: 3000USD o 1500000ARS"/>
         </div>
         <div class="col">
           <label for="tiene_ingles">¿Requiere inglés?</label>
-          <select id="tiene_ingles" class="form-control">
+          <select id="tiene_ingles" formControlName="tiene_ingles" class="form-control">
             <option value="true" selected>Sí</option>
             <option value="false">No</option>
           </select>
         </div>
         <div class="col">
           <label for="fecha_publicacion">Fecha de publicación</label>
-          <input type="date" id="fecha_publicacion" class="form-control"/>
+          <input type="date" id="fecha_publicacion" formControlName="fecha_publicacion" class="form-control"/>
         </div>
       </div>
       <br>
       <div class="form-group">
-        <textarea id="beneficios" class="form-control" rows="2" placeholder="Beneficios ofrecidos"></textarea>
+        <textarea id="beneficios" formControlName="beneficios" class="form-control" rows="2" placeholder="Beneficios ofrecidos"></textarea>
       </div>
       <br>
       <div class="form-group">
-        <input type="text" id="reclutador" class="form-control" placeholder="Nombre del reclutador"/>
+        <input type="text" id="reclutador" formControlName="reclutador" class="form-control" placeholder="Nombre del reclutador"/>
       </div>
       <br>
       <div class="row">
         <div class="col">
+          <label for="tipo">Antiguedad</label>
           <br>
-          <input type="number" id="antiguedad" class="form-control" placeholder="Antiguedad en años"/>
+          <input type="number" id="antiguedad" formControlName="antiguedad" class="form-control" placeholder="Antiguedad en años"/>
         </div>
         <div class="col">
           <label for="tipo">Tamaño de la empresa</label>
-          <select id="tipo" class="form-control">
+          <select id="tipo" formControlName="tipo" class="form-control">
             <option value="small" selected>Pequeña</option>
             <option value="medium">Mediana</option>
             <option value="large">Grande</option>
           </select>
         </div>
         <div class="col">
+          <label for="tipo">Cantidad de Empleados</label>
           <br>
-          <input type="number" id="cantidad_empleados" class="form-control" placeholder="Cantidad de empleados"/>
+          <input type="number" id="cantidad_empleados" formControlName="cantidad_empleados" class="form-control" placeholder="Cantidad de empleados"/>
         </div>
       </div>
       <br>
       <div class="form-group">
-        <textarea id="opiniones" class="form-control" rows="2" placeholder="Opiniones de la empresa ..."></textarea>
+        <textarea id="opiniones" formControlName="opiniones" class="form-control" rows="2" placeholder="Opiniones de la empresa ..."></textarea>
       </div>
       <br>
       <div class="row">
         <div class="col">
-          <input type="number" id="validacion" class="form-control" placeholder="Validacion de la empresa(1 al 5)"/>
+          <label for="tipo">Puntaje</label>
+          <input type="number" id="validacion" formControlName="validacion" class="form-control" placeholder="Validacion de la empresa(1 al 5)"/>
         </div>
         <div class="col">
-          <input type="number" id="sueldo_opinion" class="form-control" placeholder="Sueldo Real(Charlado con el Recrutier)"/>
+          <label for="tipo">Sueldo Real</label>
+          <input type="number" id="sueldo_opinion"  formControlName="sueldo_opinion" class="form-control" placeholder="Sueldo Real(Charlado con el Recrutier)"/>
         </div>
       </div>
       <br>

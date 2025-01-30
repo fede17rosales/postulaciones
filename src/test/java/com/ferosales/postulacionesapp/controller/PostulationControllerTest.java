@@ -17,11 +17,11 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @SpringBootTest
 class PostulationControllerTest {
@@ -51,7 +51,7 @@ class PostulationControllerTest {
         response.setDescription("Test Description");
         response.setResponsibilities(respo);
         response.setRecruiter("Test Recruiter");
-        response.setSalary(2000.00);
+        response.setSalary("2000.00");
         response.setDate("2024-12-11");
 
         when(postulationService.viewPostulations()).thenReturn(Collections.singletonList(response));

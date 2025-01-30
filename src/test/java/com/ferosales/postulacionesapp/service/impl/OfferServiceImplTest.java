@@ -2,8 +2,8 @@ package com.ferosales.postulacionesapp.service.impl;
 
 import com.ferosales.postulacionesapp.entity.OfferEntity;
 import com.ferosales.postulacionesapp.repository.OfferRepository;
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -45,6 +45,18 @@ class OfferServiceImplTest {
         offerService.deleteOfferById(1L);
 
         verify(offerRepository, times(1)).deleteById(1L);
+    }
+
+    @Test
+    public void testFindOfferById() {
+        when(offerRepository.findById(1L)).thenReturn(java.util.Optional.ofNullable(offer));
+
+        var foundOffer = offerService.findOfferById(1L);
+
+        verify(offerRepository, times(1)).findById(1L);
+        assert(foundOffer.isPresent());
+        assert(foundOffer.get().getId().equals(1L));
+        assert(foundOffer.get().getTitle().equals("Oferta de Trabajo"));
     }
 
 }

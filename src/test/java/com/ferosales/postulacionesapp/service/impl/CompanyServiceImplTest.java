@@ -10,7 +10,6 @@ import org.mockito.MockitoAnnotations;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
-
 import static org.mockito.Mockito.*;
 
 @SpringBootTest

@@ -4,7 +4,6 @@ import com.ferosales.postulacionesapp.dto.request.Postulation;
 import com.ferosales.postulacionesapp.dto.response.PostulationResponse;
 import com.ferosales.postulacionesapp.entity.*;
 import com.ferosales.postulacionesapp.service.PostulationService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.text.SimpleDateFormat;
@@ -137,7 +136,7 @@ public class PostulationServiceImpl implements PostulationService {
         return postulationResponse;
     }
 
-    private String setSalaryCoin(Double salary){
+    String setSalaryCoin(Double salary){
         if (salary == null){
             return "No especificado";
         } else if(salary <= 3000){

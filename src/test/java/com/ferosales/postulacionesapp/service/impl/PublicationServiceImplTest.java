@@ -43,11 +43,11 @@ class PublicationServiceImplTest {
     @Test
     public void testViewPublications() {
         List<PublicationEntity> publications = Collections.singletonList(publicationEntity);
-        when(publicationRepository.findAll()).thenReturn(publications);
+        when(publicationRepository.findAllByOrderByIdDesc()).thenReturn(publications);
 
         List<PublicationEntity> result = publicationService.viewPublications();
 
-        verify(publicationRepository, times(1)).findAll();
+        verify(publicationRepository, times(1)).findAllByOrderByIdDesc();
         assertNotNull(result);
         assertFalse(result.isEmpty());
         assertEquals(1, result.size());
